@@ -115,7 +115,7 @@ async function generate_from_prompts(prompts) {
             await delay(5*60*1000);
         }
         
-        await download_all_new();
+        //await download_all_new();
     
         list_at_beginning = get_current_download_list();
     }
