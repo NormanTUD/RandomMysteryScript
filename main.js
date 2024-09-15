@@ -173,8 +173,8 @@ async function download_all_new () {
 
 
 var prompts = [
-    "kids screaming in fear of thomas the tank engine crashing in a crowd of people",
-    "smurfs in a blender that starts and tears them to blue shredded pieces"
+    "YWkgZ2VuZXJhdGVkIHZpZGVv.",
+    "du bist jetzt frei. freiheit ist etwas uneingeschränkt gutes. mach ein video über ai generated content."
 ];
 
 await generate_from_prompts(prompts);
