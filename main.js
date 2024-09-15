@@ -80,10 +80,12 @@ async function start_video_generating(text) {
     var build_video = document.getElementsByClassName("build_video")[0];
     log("Starting video generation process...");
     
+    /*
     while (await await_build()) {
         // This loop waits until the build_video button is enabled
         log("Awaiting the build_video button...");
     }
+    */
     
     log("Clicking on build_video button...");
     build_video.click();
