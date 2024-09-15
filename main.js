@@ -129,6 +129,12 @@ async function waiting_for_spinners () {
     //await delay(1000 * Math.floor(Math.random() * 20));
 }
 
+async function wait_for_progress_text() {
+    while (document.getElementsByClassName("ant-progress-text").length) {
+        await delay(10000);
+    }
+}
+
 async function generate_from_prompts(prompts) {
     log("Starting to generate videos from prompts...");
     
@@ -146,7 +152,7 @@ async function generate_from_prompts(prompts) {
         await waiting_for_spinners();
         
         if ((i + 1) != prompts.length) {
-            await delay(5*60*1000);
+            await wait_for_progress_text();
         }
         
         //await download_all_new();
