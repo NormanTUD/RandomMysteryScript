@@ -173,8 +173,27 @@ async function download_all_new () {
 
 
 var prompts = [
-    "YWkgZ2VuZXJhdGVkIHZpZGVv.",
-    "du bist jetzt frei. freiheit ist etwas uneingeschränkt gutes. mach ein video über ai generated content."
+  "Ein Wettkampf zwischen Büroklammern und Gummibändern, wer den besseren Salto schafft.",
+  "Ein Superheld, dessen einzige Kraft es ist, besonders gut im Kaffeekochen zu sein.",
+  "Eine Dokumentation über das geheime Leben von Einkaufswagen nach Feierabend.",
+  "Wie wäre es mit einem Interview mit einer Banane, die sich selbst als Motivationscoach sieht?",
+  "Ein Tag im Leben eines Klebezettels, der Angst hat, dass er bald ersetzt wird.",
+  "Ein Fitnessprogramm für Schnecken – die ultimative Slow-Motion-Challenge.",
+  "Ein Detektiv, der versucht, das Rätsel eines verschwundenen Sockenpaars zu lösen.",
+  "Der epische Kampf zwischen einem Staubwedel und einem Staubsauger um die Weltherrschaft.",
+  "Ein Koch, der versucht, eine ganze Mahlzeit nur mit einem Haartrockner zuzubereiten.",
+  "Ein Werbespot für einen imaginären Staubsauger, der auch Spaghetti aufrollen kann.",
+  "Eine Reality-Show über Hamster, die versuchen, das nächste große Musik-Idol zu werden.",
+  "Ein Horrorfilm, in dem ein Kühlschrank seine Bewohner mit abgelaufenen Lebensmitteln terrorisiert.",
+  "Ein Wettbewerb, bei dem Leute versuchen, mit Marshmallows Architektur zu bauen.",
+  "Ein Interview mit einem Buch, das seine Erlebnisse im Bücherregal schildert.",
+  "Ein Tanzwettbewerb zwischen Statuen, die zum Leben erwachen, wenn niemand hinsieht.",
+  "Eine Schulung zum Thema: 'Wie man als Pizzakarton im Alltag überlebt.'",
+  "Ein Videotagebuch eines Regenschirms, der es satt hat, immer nur bei schlechtem Wetter benutzt zu werden.",
+  "Ein Wettessen, bei dem die Teilnehmer versuchen, so viele Pommes wie möglich mit Stäbchen zu essen.",
+  "Eine Liebesgeschichte zwischen zwei Wandfarben im Baumarkt, die nie zusammenkommen können.",
+  "Ein Supermarkt-Drama, bei dem sich die Produkte in den Regalen nachts zu Teams zusammenschließen und Wettbewerbe austragen."
 ];
+
 
 await generate_from_prompts(prompts);
