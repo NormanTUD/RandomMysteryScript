@@ -126,6 +126,10 @@ async function waiting_for_spinners () {
 }
 
 async function wait_for_progress_text() {
+    while(document.getElementsByClassName("rotate-image").length) {
+        await delay(10000, "Waiting for rotate-images to disappear");
+    }
+    
     while (document.getElementsByClassName("ant-progress-text").length) {
         await delay(10000, "Waiting for progress text to disappear");
     }
