@@ -28,53 +28,39 @@ function delay(delayInms, reason = "waiting", debug = true) {
         console.log(`Delaying for ${delayInms} ms (${reason})`);
     }
 
-    if (delayInms > 1000) {
-        const timerElement = document.createElement('div');
-        timerElement.id = uniqueId;
-        timerElement.style.position = 'fixed';
-        timerElement.style.top = `${document.querySelectorAll('div[id^="delay-timer"]').length * 40}px`;  // Dynamically place each timer
-        timerElement.style.left = '0';
-        timerElement.style.backgroundColor = 'lightblue';
-        timerElement.style.padding = '10px';
-        timerElement.style.fontSize = '16px';
-        document.body.prepend(timerElement);
+    const timerElement = document.createElement('div');
+    timerElement.id = uniqueId;
+    timerElement.style.position = 'fixed';
+    timerElement.style.top = `${document.querySelectorAll('div[id^="delay-timer"]').length * 40}px`;  // Dynamically place each timer
+    timerElement.style.left = '0';
+    timerElement.style.backgroundColor = 'lightblue';
+    timerElement.style.padding = '10px';
+    timerElement.style.fontSize = '16px';
+    document.body.prepend(timerElement);
 
-        let remainingTime = Math.floor(delayInms / 1000);
+    let remainingTime = Math.floor(delayInms / 1000);
 
-        const interval = setInterval(() => {
-            timerElement.textContent = `${reason}: ${remainingTime} seconds remaining...`;
-            remainingTime--;
+    const interval = setInterval(() => {
+        timerElement.textContent = `${reason}: ${remainingTime} seconds remaining...`;
+        remainingTime--;
 
-            if (remainingTime < 0) {
-                clearInterval(interval);
-            }
-        }, 1000);
+        if (remainingTime < 0) {
+            clearInterval(interval);
+        }
+    }, 1000);
 
-        return new Promise(resolve => {
-            setTimeout(() => {
-                clearInterval(interval);
-                document.body.removeChild(timerElement);
-                resolve();
-            }, delayInms);
-        });
-    }
+    return new Promise(resolve => {
+        setTimeout(() => {
+            clearInterval(interval);
+            document.body.removeChild(timerElement);
+            resolve();
+        }, delayInms);
+    });
 
     return new Promise(resolve => setTimeout(resolve, delayInms));
 }
 
-async function await_build () {
-    var build_video = document.getElementsByClassName("build_video")[0];
-    log("Checking if build_video is enabled...");
-    while ((" " + build_video.className + " ").replace(/[\n\t]/g, " ").indexOf(" disable_build ") > -1) {
-        log("Build button is disabled, waiting 10 second...");
-        await delay(10000, "Waiting for build button to be enabled", false);
-    }
-    log("Build button is enabled, continuing...");
-}
-
 async function start_video_generating(text) {
-    //await waiting_for_spinners();
-    
     set_text_field(text);
     
     var build_video = document.getElementsByClassName("build_video")[0];
@@ -82,19 +68,10 @@ async function start_video_generating(text) {
     
     await wait_for_progress_text();
     
-    /*
-    while (await await_build()) {
-        // This loop waits until the build_video button is enabled
-        log("Awaiting the build_video button...");
-    }
-    */
-    
     log("Clicking on build_video button...");
     build_video.click();
     
     await delay(20000, "Waiting for video generation to start");
-    
-    //await waiting_for_spinners();
 }
 
 function isVisible(el) {
@@ -107,8 +84,6 @@ function isVisible(el) {
 async function generate_video (text) {
     log(`Generating video for: ${text}`);
     
-    //await waiting_for_spinners();
-        
     await start_video_generating(text);
 }
 
@@ -142,18 +117,12 @@ async function wait_for_progress_text() {
 async function generate_from_prompts(prompts) {
     log("Starting to generate videos from prompts...");
     
-    //await waiting_for_spinners();
-    
     list_at_beginning = get_current_download_list();
     for (var i = 0; i < prompts.length; i++) {
         var elem = prompts[i];
         log(`Processing prompt ${i + 1}/${prompts.length}: ${elem}`);
         
-        //await waiting_for_spinners();
-        
         await generate_video(elem);
-        
-        //await waiting_for_spinners();
         
         if ((i + 1) != prompts.length) {
             await delay(60000, "Waiting after job started");
@@ -208,7 +177,7 @@ var prompts = [
     "thomas the tank engine as a roller coaster",
     "smurfs in a blender",
     "cats in an epic space battle, lasers, dramatic scene",
-    
+    "epic dinosaur battle shooting lasers out of their eyes"
 ];
 
 await generate_from_prompts(prompts);
