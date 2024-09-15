@@ -173,11 +173,8 @@ async function download_all_new () {
 
 
 var prompts = [
-    "deutscher kinderfilm: thomas der panzer zerstört seine feinde",
-    "thomas the tank engine as a roller coaster",
-    "smurfs in a blender",
-    "cats in an epic space battle, lasers, dramatic scene",
-    "epic dinosaur battle shooting lasers out of their eyes"
+    "kids screaming in fear of thomas the tank engine crashing in a crowd of people",
+    ">><<iittaaker42awREWQRefsoigje5otigwhjfwoihufjweut4iw4t"
 ];
 
 await generate_from_prompts(prompts);
