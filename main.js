@@ -150,9 +150,13 @@ async function download_all_new () {
         if(_dl_button.href && !list_at_beginning.includes(_dl_button.href)) {
             _dl_button.click();
             
+            list_at_beginning.push(_dl_button.href);
+            
             await delay(10000);
         }
     }
+    
+    list_at_beginning = get_current_download_list();
 }
 
 
