@@ -125,7 +125,7 @@ async function generate_from_prompts(prompts) {
         await generate_video(elem);
         
         if ((i + 1) != prompts.length) {
-            await delay(60000, "Waiting after job started");
+            await delay(30000, "Waiting after job started");
             await wait_for_progress_text();
         }
         
@@ -174,7 +174,7 @@ async function download_all_new () {
 
 var prompts = [
     "kids screaming in fear of thomas the tank engine crashing in a crowd of people",
-    ">><<iittaaker42awREWQRefsoigje5otigwhjfwoihufjweut4iw4t"
+    "smurfs in a blender that starts and tears them to blue shredded pieces"
 ];
 
 await generate_from_prompts(prompts);
