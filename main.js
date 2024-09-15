@@ -161,7 +161,7 @@ async function download_all_new () {
 
 
 var prompts = [
-    "ein typ der völlig durchdreht in einer zufälligen umgebung",
+    "ein ufo das so groß war das man es kaum glauben kann",
     "nichts was irgendwie sinn ergibt",
     "ein typ der eine pizza degreased"
 ];
