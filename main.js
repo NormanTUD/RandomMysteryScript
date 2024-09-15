@@ -204,9 +204,11 @@ async function download_all_new () {
 
 
 var prompts = [
-    "ein ufo das so groß war das man es kaum glauben kann",
-    "nichts was irgendwie sinn ergibt",
-    "ein typ der eine pizza degreased"
+    "deutscher kinderfilm: thomas der panzer zerstört seine feinde",
+    "thomas the tank engine as a roller coaster",
+    "smurfs in a blender",
+    "cats in an epic space battle, lasers, dramatic scene",
+    
 ];
 
 await generate_from_prompts(prompts);
