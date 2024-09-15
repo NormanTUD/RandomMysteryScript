@@ -21,18 +21,18 @@ function set_text_field(val) {
     text_field.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function delay(delayInms, debug = true) {
-    const uniqueId = `delay-timer-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;  // Einzigartige ID für den Timer
+function delay(delayInms, reason = "waiting", debug = true) {
+    const uniqueId = `delay-timer-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;  // Unique ID for the timer
 
     if (debug) {
-        console.log(`Delaying for ${delayInms} ms`);
+        console.log(`Delaying for ${delayInms} ms (${reason})`);
     }
 
     if (delayInms > 1000) {
         const timerElement = document.createElement('div');
         timerElement.id = uniqueId;
         timerElement.style.position = 'fixed';
-        timerElement.style.top = `${document.querySelectorAll('div[id^="delay-timer"]').length * 40}px`;  // Dynamisch für jeden Timer platzieren
+        timerElement.style.top = `${document.querySelectorAll('div[id^="delay-timer"]').length * 40}px`;  // Dynamically place each timer
         timerElement.style.left = '0';
         timerElement.style.backgroundColor = 'lightblue';
         timerElement.style.padding = '10px';
@@ -42,7 +42,7 @@ function delay(delayInms, debug = true) {
         let remainingTime = Math.floor(delayInms / 1000);
 
         const interval = setInterval(() => {
-            timerElement.textContent = `Waiting: ${remainingTime} seconds remaining...`;
+            timerElement.textContent = `${reason}: ${remainingTime} seconds remaining...`;
             remainingTime--;
 
             if (remainingTime < 0) {
@@ -67,13 +67,13 @@ async function await_build () {
     log("Checking if build_video is enabled...");
     while ((" " + build_video.className + " ").replace(/[\n\t]/g, " ").indexOf(" disable_build ") > -1) {
         log("Build button is disabled, waiting 10 second...");
-        await delay(10000, false);
+        await delay(10000, "Waiting for build button to be enabled", false);
     }
     log("Build button is enabled, continuing...");
 }
 
 async function start_video_generating(text) {
-    await waiting_for_spinners();
+    //await waiting_for_spinners();
     
     set_text_field(text);
     
@@ -88,26 +88,24 @@ async function start_video_generating(text) {
     log("Clicking on build_video button...");
     build_video.click();
     
-    await delay(20000);
+    await delay(20000, "Waiting for video generation to start");
     
-    await waiting_for_spinners();
+    //await waiting_for_spinners();
 }
 
 function isVisible(el) {
     if (!el) {
         return false;
     }
-    return !(el.offsetParent === null)
+    return !(el.offsetParent === null);
 }
 
 async function generate_video (text) {
     log(`Generating video for: ${text}`);
     
-    await waiting_for_spinners();
+    //await waiting_for_spinners();
         
     await start_video_generating(text);
-    
-    //await delay(1000 * Math.floor(Math.random() * 20));
 }
 
 async function waiting_for_spinners () {
@@ -115,48 +113,45 @@ async function waiting_for_spinners () {
     
     var _is_visible_misses = 0;
     
-    while (_is_visible_misses > 3) {
+    while (_is_visible_misses <= 3) {
         log("Waiting until no spinners are visible...");
-        await delay(10000, false);
+        await delay(10000, "Waiting for spinners to disappear", false);
         _is_visible = isVisible(document.getElementsByClassName("ant-progress-circle-path")[0]);
     
-        if(!_is_visible) {
+        if (!_is_visible) {
             _is_visible_misses++;
             log(`_is_visible_misses: ${_is_visible_misses}`);
         }
     }
-    
-    //await delay(1000 * Math.floor(Math.random() * 20));
 }
 
 async function wait_for_progress_text() {
     while (document.getElementsByClassName("ant-progress-text").length) {
-        await delay(10000);
+        await delay(10000, "Waiting for progress text to disappear");
     }
 }
 
 async function generate_from_prompts(prompts) {
     log("Starting to generate videos from prompts...");
     
-    await waiting_for_spinners();
+    //await waiting_for_spinners();
     
     list_at_beginning = get_current_download_list();
     for (var i = 0; i < prompts.length; i++) {
         var elem = prompts[i];
         log(`Processing prompt ${i + 1}/${prompts.length}: ${elem}`);
         
-        await waiting_for_spinners();
+        //await waiting_for_spinners();
         
         await generate_video(elem);
         
-        await waiting_for_spinners();
+        //await waiting_for_spinners();
         
         if ((i + 1) != prompts.length) {
+            await delay(60000, "Waiting after job started");
             await wait_for_progress_text();
         }
         
-        //await download_all_new();
-    
         list_at_beginning = get_current_download_list();
     }
 
@@ -173,8 +168,8 @@ function get_current_download_list () {
     for (var i = 0; i < download_buttons.length; i++) {
         var _dl_button = download_buttons[i];
 
-        if(_dl_button.href) {
-            list.push(_dl_button.href)
+        if (_dl_button.href) {
+            list.push(_dl_button.href);
         }
     }
     
@@ -187,12 +182,12 @@ async function download_all_new () {
     for (var i = 0; i < download_buttons.length; i++) {
         var _dl_button = download_buttons[i];
 
-        if(_dl_button.href && !list_at_beginning.includes(_dl_button.href)) {
+        if (_dl_button.href && !list_at_beginning.includes(_dl_button.href)) {
             _dl_button.click();
             
             list_at_beginning.push(_dl_button.href);
             
-            await delay(10000);
+            await delay(10000, "Downloading new video");
         }
     }
     
