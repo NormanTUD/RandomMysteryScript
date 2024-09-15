@@ -21,12 +21,46 @@ function set_text_field(val) {
     text_field.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-function delay (delayInms, debug = true) {
-    if(debug) {
-        log(`Delaying for ${delayInms} ms`);
+function delay(delayInms, debug = true) {
+    const uniqueId = `delay-timer-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;  // Einzigartige ID für den Timer
+
+    if (debug) {
+        console.log(`Delaying for ${delayInms} ms`);
     }
+
+    if (delayInms > 1000) {
+        const timerElement = document.createElement('div');
+        timerElement.id = uniqueId;
+        timerElement.style.position = 'fixed';
+        timerElement.style.top = `${document.querySelectorAll('div[id^="delay-timer"]').length * 40}px`;  // Dynamisch für jeden Timer platzieren
+        timerElement.style.left = '0';
+        timerElement.style.backgroundColor = 'lightblue';
+        timerElement.style.padding = '10px';
+        timerElement.style.fontSize = '16px';
+        document.body.prepend(timerElement);
+
+        let remainingTime = Math.floor(delayInms / 1000);
+
+        const interval = setInterval(() => {
+            timerElement.textContent = `Waiting: ${remainingTime} seconds remaining...`;
+            remainingTime--;
+
+            if (remainingTime < 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                clearInterval(interval);
+                document.body.removeChild(timerElement);
+                resolve();
+            }, delayInms);
+        });
+    }
+
     return new Promise(resolve => setTimeout(resolve, delayInms));
-};
+}
 
 async function await_build () {
     var build_video = document.getElementsByClassName("build_video")[0];
